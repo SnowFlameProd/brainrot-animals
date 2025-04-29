@@ -11,4 +11,6 @@ export const loginUser = async (username: string, password: string) => axiosInst
     password,
 });
 
+export const getQuestions = async () => axiosInstance.get(routes.get_questions, {});
+
 export const getMe = async () => axiosInstance.get(routes.me);

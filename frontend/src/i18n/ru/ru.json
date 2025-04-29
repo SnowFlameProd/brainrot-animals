@@ -14,5 +14,9 @@
     "passwordMatch": "Пароли должны совпадать",
     "loginFailed": "Неверные имя пользователя или пароль",
     "signupFailed": "Такой пользователь уже существует"
+  },
+  "header": {
+    "title": "Brainrot Animals",
+    "logout": "Выход"
   }
 }

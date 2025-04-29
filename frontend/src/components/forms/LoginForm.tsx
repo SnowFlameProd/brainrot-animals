@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
@@ -6,10 +6,15 @@ import {Button} from "@/components/ui/button.tsx";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {loginUser} from "@/services/manageData.ts";
-import routes from "@/routes/routes.ts";  // Импортируем Yup для валидации
+import routes from "@/routes/routes.ts";
+import {useLocation, useNavigate} from "react-router-dom";
+import AuthContext from "@/contexts/AuthContext.tsx";
 
 const LoginForm = () => {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { setUser } = useContext(AuthContext)!;
+    const location = useLocation();
     const [error, setError] = useState<string | null>(null);
 
     const validationSchema = Yup.object({
@@ -25,9 +30,11 @@ const LoginForm = () => {
         validationSchema,
         onSubmit: async (values) => {
             try {
-                const response = await loginUser(values.username, values.password);
-                console.log(response);
-                localStorage.setItem('authToken', response.data.token);
+                const { data } = await loginUser(values.username, values.password);
+                localStorage.setItem('user', JSON.stringify({token: data.token, username: data.username, id: data.id}));
+                setUser({id: data.id, username: data.username});
+                const { from } = location.state || { from: { pathname: routes.root } };
+                navigate(from);
             } catch (error: any) {
                 setError(error.response.data.message || "");
             }

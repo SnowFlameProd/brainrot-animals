@@ -8,7 +8,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode}) => {
     const [loading, setLoading] = useState(true);
 
     const checkAuth = async () => {
-        const token = localStorage.getItem('authToken');
+        const storedUser = localStorage.getItem('user');
+        const token = storedUser ? JSON.parse(storedUser).token : null;
+
         if (!token) {
             setLoading(false);
             return;
@@ -18,18 +20,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode}) => {
             const res = await getMe();
             setUser(res.data);
         } catch (err) {
-            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
         } finally {
             setLoading(false);
         }
     }
+
+    const logOut = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+    };
 
     useEffect(() => {
         checkAuth();
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, setUser }}>
+        <AuthContext.Provider value={{ user, isAuthenticated: !!user, loading, setUser, logOut }}>
             {children}
         </AuthContext.Provider>
     )
