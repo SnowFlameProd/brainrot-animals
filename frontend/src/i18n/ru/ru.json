@@ -18,5 +18,13 @@
   "header": {
     "title": "Brainrot Animals",
     "logout": "Выход"
+  },
+  "quiz": {
+    "start": "Начать",
+    "continue": "Далее",
+    "resultGreat": "Отличный результат!",
+    "resultMiddle": "Неплохо, но ты можешь лучше",
+    "resultBad": "Тебе стоит подучить теорию...",
+    "question": "Кто из них {{animal}}?"
   }
 }

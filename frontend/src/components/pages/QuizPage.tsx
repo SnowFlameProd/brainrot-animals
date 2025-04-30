@@ -1,25 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {getQuestions} from "@/services/manageData.ts";
+import React from "react";
 import Header from "@/components/Header.tsx";
+import Quiz from "@/components/Quiz.tsx";
 
 const QuizPage = () => {
-    const [isStarted, setIsStarted] = useState(false);
-
-    useEffect(() => {
-        const fetch = async () => {
-            const response = await getQuestions();
-            console.log(response.data);
-        }
-
-        fetch();
-    }, []);
 
     return (
         <>
             <Header/>
             <div className="w-screen h-screen">
-                <div className="bg-gradient-to-br from-blue-500 to-gray-300 w-full h-full">
-
+                <div className="bg-gradient-to-br from-blue-500 to-gray-300 w-full h-full flex items-center justify-center">
+                    <Quiz/>
                 </div>
             </div>
         </>
